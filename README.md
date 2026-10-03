@@ -108,22 +108,37 @@ Valida siempre con el [Rich Results Test](https://search.google.com/test/rich-re
 
 ---
 
-## 🚀 Despliegue
+## 🚀 Despliegue en Cloudflare Pages (esta rama)
 
-El sitio es **estático** (`npm run build` → carpeta `dist/`), así que se publica en cualquier hosting estático. Antes de desplegar, ajusta `src/consts.ts`:
+> Esta es la rama **`deploy/cloudflare`**: producción en **`https://max.benjacode.com`** (`SITE.url` con dominio propio, `base: '/'`). El template neutro y reutilizable vive en `main`.
 
-| Destino | `SITE.url` | `SITE.base` |
-|---|---|---|
-| **Vercel / Netlify / Cloudflare Pages** | `https://www.tudominio.com` | `/` |
-| Dominio propio (cualquier host) | `https://www.tudominio.com` | `/` |
-| `TU_USUARIO.github.io` (sitio de usuario) | `https://TU_USUARIO.github.io` | `/` |
-| **GitHub Pages de proyecto** (subruta) | `https://TU_USUARIO.github.io` | `/nombre-del-repo` |
+Flujo automatizado: **`git push` a `deploy/cloudflare` → GitHub Actions compila → despliega a Cloudflare Pages**.
 
-Comando de build: `npm run build` · Directorio de salida: `dist` · Node 18.17+.
+```
+git push (deploy/cloudflare) ──► GitHub Actions (npm run build) ──► Cloudflare Pages ──► max.benjacode.com
+```
 
-> **Recomendado:** un hosting estático en la **raíz del dominio** (`SITE.base = '/'`) para que `robots.txt`, `llms.txt` y las URLs queden en la raíz, que es donde los buscadores y crawlers de IA los leen. Cloudflare Pages, Vercel y Netlify cumplen esto de serie.
->
-> La configuración específica para **GitHub Pages** (subruta + workflow de Actions) vive en la rama `deploy/github-pages`, no en `main`, para mantener este template limpio y reutilizable.
+Lo gestiona `.github/workflows/cloudflare.yml` (acción oficial `cloudflare/wrangler-action`).
+
+### Paso único de configuración (una sola vez)
+
+Añade el token de Cloudflare como **secret** del repositorio:
+
+1. GitHub → **Settings → Secrets and variables → Actions → New repository secret**.
+2. Nombre: `CLOUDFLARE_API_TOKEN` · Valor: tu token de Cloudflare (con permisos *Account → Cloudflare Pages → Edit*).
+3. A partir de ahí, cada push a `deploy/cloudflare` publica solo.
+
+> El Account ID y el nombre del proyecto (`max-optimice`) van en el workflow (no son sensibles). El dominio `max.benjacode.com` ya está enlazado al proyecto vía CNAME proxied + SSL de Cloudflare.
+
+### Despliegue manual (alternativo)
+
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name=max-optimice --branch=main
+# requiere CLOUDFLARE_API_TOKEN y CLOUDFLARE_ACCOUNT_ID en el entorno
+```
+
+> Para otros hosts (Vercel/Netlify/dominio propio): el sitio es estático (`dist/`), `base: '/'`. Build `npm run build`, salida `dist`, Node 18.17+.
 
 ---
 

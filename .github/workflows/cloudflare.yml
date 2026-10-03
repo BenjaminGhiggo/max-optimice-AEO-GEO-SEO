@@ -1,0 +1,41 @@
+name: Deploy to Cloudflare Pages
+
+# Flujo: push a esta rama -> GitHub Actions compila -> despliega a Cloudflare Pages.
+# Rama de producción de este deploy: deploy/cloudflare (tiene SITE.url = max.benjacode.com).
+on:
+  push:
+    branches: [deploy/cloudflare]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build (Astro)
+        run: npm run build
+
+      - name: Deploy a Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          # ⚠️ Añade este secret en el repo: Settings → Secrets and variables → Actions.
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Account ID (no es sensible):
+          accountId: 5a6809cb83f4f5be9d370a10f8670642
+          # --branch=main => despliegue de PRODUCCIÓN (la production branch del proyecto es "main"),
+          # por eso sirve en max.benjacode.com aunque el workflow corra en deploy/cloudflare.
+          command: pages deploy dist --project-name=max-optimice --branch=main
