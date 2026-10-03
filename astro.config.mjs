@@ -6,8 +6,10 @@ import { SITE } from './src/consts';
 
 // https://astro.build/config
 export default defineConfig({
-  // ⚠️ CAMBIA esto por tu dominio real. Es la base para canonical, OG, sitemap y hreflang.
+  // ⚠️ Origen (host) del sitio: base de canonical, OG, sitemap y hreflang.
   site: SITE.url,
+  // Subruta de despliegue. '/' para dominio propio; '/repo' para GitHub Pages de proyecto.
+  base: SITE.base,
 
   // i18n nativo de Astro. El español vive en la raíz (/) y el inglés en /en/.
   i18n: {

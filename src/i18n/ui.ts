@@ -52,11 +52,25 @@ export function useTranslations(locale: Locale) {
 }
 
 /**
- * Construye una ruta con el prefijo de idioma correcto.
- * es (default) -> "/ruta"; en -> "/en/ruta".
+ * Antepone la subruta de despliegue (`base`) a una ruta absoluta del sitio.
+ * Lee import.meta.env.BASE_URL (lo inyecta Astro desde `base`; siempre con
+ * barras inicial y final, p. ej. "/" o "/mi-repo/").
+ * Úsalo para TODO href/asset interno para que funcione bajo GitHub Pages.
+ */
+export function withBase(path: string): string {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // "" o "/mi-repo"
+  const clean = `/${path}`.replace(/\/+/g, '/');
+  const joined = `${base}${clean}`.replace(/\/+/g, '/');
+  return joined === '' ? '/' : joined;
+}
+
+/**
+ * Construye una ruta con el prefijo de idioma correcto Y la subruta base.
+ * es (default) -> "{base}/ruta"; en -> "{base}/en/ruta".
  */
 export function localizedPath(path: string, locale: Locale): string {
   const clean = `/${path}`.replace(/\/+/g, '/').replace(/\/$/, '') || '/';
-  if (locale === SITE.defaultLocale) return clean;
-  return clean === '/' ? `/${locale}` : `/${locale}${clean}`;
+  const withLocale =
+    locale === SITE.defaultLocale ? clean : clean === '/' ? `/${locale}` : `/${locale}${clean}`;
+  return withBase(withLocale);
 }

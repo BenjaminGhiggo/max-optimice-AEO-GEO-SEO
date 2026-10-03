@@ -108,6 +108,25 @@ Valida siempre con el [Rich Results Test](https://search.google.com/test/rich-re
 
 ---
 
+## 🚀 Despliegue
+
+El sitio es **estático** (`npm run build` → carpeta `dist/`), así que se publica en cualquier hosting estático. Antes de desplegar, ajusta `src/consts.ts`:
+
+| Destino | `SITE.url` | `SITE.base` |
+|---|---|---|
+| **Vercel / Netlify / Cloudflare Pages** | `https://www.tudominio.com` | `/` |
+| Dominio propio (cualquier host) | `https://www.tudominio.com` | `/` |
+| `TU_USUARIO.github.io` (sitio de usuario) | `https://TU_USUARIO.github.io` | `/` |
+| **GitHub Pages de proyecto** (subruta) | `https://TU_USUARIO.github.io` | `/nombre-del-repo` |
+
+Comando de build: `npm run build` · Directorio de salida: `dist` · Node 18.17+.
+
+> **Recomendado:** un hosting estático en la **raíz del dominio** (`SITE.base = '/'`) para que `robots.txt`, `llms.txt` y las URLs queden en la raíz, que es donde los buscadores y crawlers de IA los leen. Cloudflare Pages, Vercel y Netlify cumplen esto de serie.
+>
+> La configuración específica para **GitHub Pages** (subruta + workflow de Actions) vive en la rama `deploy/github-pages`, no en `main`, para mantener este template limpio y reutilizable.
+
+---
+
 ## 📌 Antes de publicar
 
 - [ ] Cambiar `SITE.url` en `src/consts.ts` por el dominio real.
