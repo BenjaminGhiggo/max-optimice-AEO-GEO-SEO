@@ -10,10 +10,10 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 import { SITE } from '../consts';
-import { localizedPath } from '../i18n/ui';
+import { localizedPath, withBase } from '../i18n/ui';
 
 export async function GET(context: APIContext) {
-  const site = (context.site ?? new URL(SITE.url)).toString().replace(/\/$/, '');
+  const site = (context.site ?? new URL(SITE.url)).origin;
   const posts = (await getCollection('blog', (p) => p.data.lang === SITE.defaultLocale && !p.data.draft)).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
@@ -38,8 +38,8 @@ ${SITE.name} es una plantilla de landing de marketing construida en Astro y opti
 ${postLines}
 
 ## Optional
-- [RSS](${site}/rss.xml)
-- [Sitemap](${site}/sitemap-index.xml)
+- [RSS](${site}${withBase('/rss.xml')})
+- [Sitemap](${site}${withBase('/sitemap-index.xml')})
 `;
 
   return new Response(body, {

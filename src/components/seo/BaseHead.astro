@@ -8,7 +8,7 @@
  * Documentado por qué cada etiqueta está aquí.
  */
 import { SITE, LOCALE_BCP47, type Locale } from '../../consts';
-import { localizedPath } from '../../i18n/ui';
+import { localizedPath, withBase } from '../../i18n/ui';
 
 interface Props {
   title: string;
@@ -38,9 +38,12 @@ const {
   modifiedTime,
 } = Astro.props;
 
-// Canonical SIEMPRE absoluto (requisito de Google).
+// Canonical SIEMPRE absoluto (requisito de Google). localizedPath ya incluye la base.
 const canonicalURL = new URL(localizedPath(path, locale), SITE.url);
-const ogImageURL = new URL(image, SITE.url);
+// La imagen puede ser ruta de asset cruda ("/og/..") o ya absoluta (http...).
+const ogImageURL = /^https?:\/\//.test(image)
+  ? new URL(image)
+  : new URL(withBase(image), SITE.url);
 
 // Alternates hreflang: una entrada por idioma + x-default -> idioma por defecto.
 const alternates = SITE.locales.map((l) => ({
@@ -103,7 +106,7 @@ const robots = noindex
 {SITE.twitterHandle && <meta name="twitter:site" content={SITE.twitterHandle} />}
 
 {/* Feeds descubribles por crawlers */}
-<link rel="alternate" type="application/rss+xml" title={`${SITE.name} — RSS`} href={new URL('/rss.xml', SITE.url).href} />
+<link rel="alternate" type="application/rss+xml" title={`${SITE.name} — RSS`} href={new URL(withBase('/rss.xml'), SITE.url).href} />
 
 {/* Rendimiento: pista temprana al origen (ayuda al LCP si sirves assets propios) */}
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />

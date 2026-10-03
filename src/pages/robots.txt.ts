@@ -12,9 +12,11 @@
  */
 import type { APIContext } from 'astro';
 import { SITE } from '../consts';
+import { withBase } from '../i18n/ui';
 
 export function GET(context: APIContext) {
-  const site = (context.site ?? new URL(SITE.url)).toString().replace(/\/$/, '');
+  const origin = (context.site ?? new URL(SITE.url)).origin;
+  const sitemapUrl = new URL(withBase('/sitemap-index.xml'), origin).href;
 
   const body = `# robots.txt — ${SITE.name}
 # Por defecto: todo permitido (SEO + AEO + GEO).
@@ -38,7 +40,7 @@ Allow: /
 # User-agent: Claude-SearchBot
 # Allow: /
 
-Sitemap: ${site}/sitemap-index.xml
+Sitemap: ${sitemapUrl}
 `;
 
   return new Response(body, {

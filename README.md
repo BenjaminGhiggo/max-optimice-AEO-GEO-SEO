@@ -108,6 +108,36 @@ Valida siempre con el [Rich Results Test](https://search.google.com/test/rich-re
 
 ---
 
+## 🚀 Desplegar en GitHub Pages
+
+La plantilla incluye el workflow `.github/workflows/deploy.yml` (acción oficial `withastro/action`), que compila y publica en cada push a `main`.
+
+### Pasos
+
+1. **Configura `src/consts.ts`** según tu caso:
+
+   | Caso | `SITE.url` | `SITE.base` |
+   |---|---|---|
+   | GitHub Pages de **proyecto** | `https://TU_USUARIO.github.io` | `/nombre-del-repo` |
+   | `TU_USUARIO.github.io` (sitio de usuario) | `https://TU_USUARIO.github.io` | `/` |
+   | **Dominio propio** | `https://www.tudominio.com` | `/` |
+
+   (Ya viene preconfigurada para este repo: `https://benjaminghiggo.github.io` + `/max-optimice-AEO-GEO-SEO`.)
+
+2. En GitHub: **Settings → Pages → Build and deployment → Source: _GitHub Actions_**.
+3. Haz push de la rama a `main` (o lanza el workflow a mano en **Actions → Deploy to GitHub Pages → Run workflow**).
+4. El sitio queda en `https://TU_USUARIO.github.io/nombre-del-repo/`.
+
+### ⚠️ Limitación de GitHub Pages de **proyecto** (subruta)
+
+Los crawlers solo leen `robots.txt` y `llms.txt` en la **raíz del dominio** (`https://TU_USUARIO.github.io/robots.txt`), que en un repo de proyecto **no controlas** (es la raíz compartida de tu cuenta github.io). Bajo subruta, esta plantilla los sirve en `…/nombre-del-repo/robots.txt`, que los buscadores ignoran.
+
+Todo lo demás (HTML, canonical, hreflang, JSON-LD, OG, sitemap) funciona perfecto en subruta. El sitemap puedes enviarlo igualmente por su URL completa en Search Console.
+
+**Recomendación para control total de SEO:** usa un **dominio propio** (gratis de apuntar, GitHub Pages lo soporta con un `CNAME`) o un **sitio de usuario** (`TU_USUARIO.github.io`). En ambos casos pon `SITE.base = '/'` y `robots.txt`/`llms.txt` quedarán en la raíz real.
+
+---
+
 ## 📌 Antes de publicar
 
 - [ ] Cambiar `SITE.url` en `src/consts.ts` por el dominio real.

@@ -13,8 +13,15 @@
  *   - Product/Offer + AggregateRating -> estrellas y precio (rich result vigente)
  */
 import { SITE, type Locale, LOCALE_BCP47 } from '../consts';
+import { withBase } from '../i18n/ui';
 
+// URL absoluta a partir de una ruta que YA incluye la subruta base
+// (p. ej. la que devuelve localizedPath).
 const abs = (path: string) => new URL(path, SITE.url).href;
+// URL absoluta a partir de una ruta de asset CRUDA (sin base), p. ej. "/og/logo.png".
+const absAsset = (path: string) => new URL(withBase(path), SITE.url).href;
+// Raíz desplegada real (origen + base).
+const homeUrl = new URL(withBase('/'), SITE.url).href;
 
 /** Nodo Organization reutilizable (id estable para enlazar desde otros nodos). */
 export function organizationSchema() {
@@ -23,10 +30,10 @@ export function organizationSchema() {
     '@id': `${SITE.url}/#organization`,
     name: SITE.name,
     legalName: SITE.organization.legalName,
-    url: SITE.url,
+    url: homeUrl,
     logo: {
       '@type': 'ImageObject',
-      url: abs(SITE.logo),
+      url: absAsset(SITE.logo),
     },
     email: SITE.organization.email,
     telephone: SITE.organization.telephone,
@@ -41,7 +48,7 @@ export function websiteSchema(locale: Locale) {
   return {
     '@type': 'WebSite',
     '@id': `${SITE.url}/#website`,
-    url: SITE.url,
+    url: homeUrl,
     name: SITE.name,
     description: SITE.tagline[locale],
     inLanguage: LOCALE_BCP47[locale],
@@ -105,7 +112,7 @@ export function articleSchema(a: ArticleInput) {
     headline: a.title,
     description: a.description,
     inLanguage: LOCALE_BCP47[a.locale],
-    image: abs(a.image ?? SITE.defaultOgImage),
+    image: absAsset(a.image ?? SITE.defaultOgImage),
     datePublished: a.datePublished,
     dateModified: a.dateModified ?? a.datePublished,
     author: {
@@ -137,14 +144,14 @@ export function productSchema(p: ProductInput) {
     '@type': 'Product',
     name: p.name,
     description: p.description,
-    image: abs(p.image ?? SITE.defaultOgImage),
+    image: absAsset(p.image ?? SITE.defaultOgImage),
     brand: { '@type': 'Brand', name: SITE.name },
     offers: {
       '@type': 'Offer',
       price: p.price,
       priceCurrency: p.priceCurrency,
       availability: p.availability ?? 'https://schema.org/InStock',
-      url: SITE.url,
+      url: homeUrl,
     },
   };
   if (p.ratingValue && p.reviewCount) {
