@@ -1,0 +1,174 @@
+---
+/**
+ * Layout base. Compone <head> (BaseHead + JSON-LD), header con navegación y
+ * selector de idioma, <main> y footer. Sirve HTML completo y semántico:
+ * todo el contenido vive en el markup (cero dependencia de JS para crawlers/IAs).
+ */
+import '../styles/global.css';
+import BaseHead from '../components/seo/BaseHead.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { SITE, LOCALE_BCP47, LOCALE_LABELS, type Locale } from '../consts';
+import { useTranslations, localizedPath } from '../i18n/ui';
+import { organizationSchema, websiteSchema } from '../lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  locale: Locale;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  /** Schemas específicos de la página (se suman a Organization + WebSite). */
+  schema?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  locale,
+  image,
+  type = 'website',
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+  schema = [],
+} = Astro.props;
+
+const t = useTranslations(locale);
+
+// Título mostrado: "Página — Marca" (único por página, 50-60 car. recomendado).
+const fullTitle = path === '/' || path === '' ? `${SITE.name} — ${title}` : `${title} — ${SITE.name}`;
+
+// Organization + WebSite en todas las páginas; el resto se añade por página.
+const graph = [organizationSchema(), websiteSchema(locale), ...schema];
+
+// Idioma alternativo para el selector.
+const otherLocales = SITE.locales.filter((l) => l !== locale) as Locale[];
+
+const nav = [
+  { href: localizedPath('/', locale), label: t('nav.home') },
+  { href: localizedPath('/blog', locale), label: t('nav.blog') },
+  { href: `${localizedPath('/', locale)}#faq`.replace('//', '/'), label: t('nav.faq') },
+];
+---
+
+<!doctype html>
+<html lang={LOCALE_BCP47[locale]}>
+  <head>
+    <BaseHead
+      title={fullTitle}
+      description={description}
+      path={path}
+      locale={locale}
+      image={image}
+      type={type}
+      noindex={noindex}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+    />
+    <JsonLd schema={graph} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">{t('nav.skipToContent')}</a>
+
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href={localizedPath('/', locale)} class="site-header__brand">{SITE.name}</a>
+        <nav aria-label={locale === 'es' ? 'Principal' : 'Main'}>
+          <ul class="site-nav">
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="lang-switch">
+          <span class="visually-hidden">{t('lang.switch')}</span>
+          {
+            otherLocales.map((l) => (
+              <a href={localizedPath(path, l)} hreflang={LOCALE_BCP47[l]} lang={LOCALE_BCP47[l]}>
+                {LOCALE_LABELS[l]}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p class="muted">
+          © {new Date().getFullYear()} {SITE.name}. {t('footer.rights')}
+        </p>
+        <nav aria-label="Footer">
+          <ul class="site-nav">
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+    </footer>
+
+    <style>
+      .site-header {
+        border-bottom: 1px solid var(--color-border);
+        position: sticky;
+        top: 0;
+        background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+        backdrop-filter: blur(6px);
+        z-index: 10;
+      }
+      .site-header__inner {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        padding-block: 0.85rem;
+      }
+      .site-header__brand {
+        font-weight: 800;
+        font-size: 1.15rem;
+        text-decoration: none;
+        color: var(--color-text);
+        margin-right: auto;
+      }
+      .site-nav {
+        display: flex;
+        gap: 1.25rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+      }
+      .site-nav a {
+        text-decoration: none;
+        color: var(--color-muted);
+        font-weight: 500;
+      }
+      .site-nav a:hover {
+        color: var(--color-text);
+      }
+      .lang-switch {
+        display: flex;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+      }
+      .site-footer {
+        border-top: 1px solid var(--color-border);
+        padding-block: 2rem;
+        margin-top: 3rem;
+      }
+      .site-footer .container {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+    </style>
+  </body>
+</html>

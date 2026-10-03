@@ -1,0 +1,37 @@
+---
+title: 'Core Web Vitals en 2026: umbrales y cómo aprobarlos'
+description: 'Guía de los umbrales actuales de Core Web Vitals (LCP, INP, CLS) y las técnicas concretas para alcanzar la calificación "Bueno".'
+lang: 'es'
+slug: 'core-web-vitals'
+pubDate: 2026-08-20
+updatedDate: 2026-09-28
+author: 'Equipo Max Optimice'
+---
+
+**Los Core Web Vitals son tres métricas de experiencia de usuario que Google usa como factor de posicionamiento: LCP (≤2,5 s), INP (≤200 ms) y CLS (≤0,1).** Una página las aprueba solo cuando el 75% de las visitas reales alcanza "Bueno" en las tres.
+
+## ¿Cuáles son los umbrales actuales?
+
+| Métrica | Bueno | Necesita mejorar | Deficiente |
+|---|---|---|---|
+| LCP (carga) | ≤ 2,5 s | 2,5–4,0 s | > 4,0 s |
+| INP (interacción) | ≤ 200 ms | 200–500 ms | > 500 ms |
+| CLS (estabilidad) | ≤ 0,1 | 0,1–0,25 | > 0,25 |
+
+**INP reemplazó a FID en marzo de 2024** como métrica oficial de interactividad.
+
+## ¿Cómo mejorar el LCP?
+
+El LCP suele ser la imagen o el titular principal. Para bajarlo:
+
+1. Haz que el elemento LCP esté en el HTML inicial.
+2. Usa `fetchpriority="high"` y `loading="eager"` en la imagen principal (nunca `lazy`).
+3. Sirve formatos modernos (WebP/AVIF) con `srcset` responsive.
+
+## ¿Cómo evitar saltos de diseño (CLS)?
+
+Reserva siempre el espacio: define `width` y `height` (o `aspect-ratio`) en imágenes, iframes y anuncios, y precarga las fuentes con `font-display: optional` o `swap` para evitar el reflujo del texto.
+
+> Un hero basado en texto, imágenes dimensionadas y CSS en línea dejan los Core Web Vitals en verde desde el primer build —exactamente lo que hace esta plantilla.
+
+_Fuentes: Google Search Central; web.dev, Core Web Vitals (2026)._

@@ -1,0 +1,63 @@
+---
+/**
+ * Prueba social: reseñas + valoración agregada.
+ * AggregateRating/Review siguen dando rich result (estrellas) en Google 2026,
+ * y las menciones/testimonios refuerzan la señal de entidad que usan las IAs.
+ * El schema se añade desde la página; aquí va el markup visible.
+ */
+interface Review {
+  quote: string;
+  author: string;
+  role?: string;
+}
+interface Props {
+  heading: string;
+  rating?: { value: string; count: string };
+  reviews: Review[];
+}
+const { heading, rating, reviews } = Astro.props;
+---
+
+<section class="proof" aria-labelledby="proof-title">
+  <div class="container">
+    <h2 id="proof-title">{heading}</h2>
+    {
+      rating && (
+        <p class="proof__rating">
+          <strong>{rating.value}/5</strong>
+          <span aria-hidden="true"> ★★★★★ </span>
+          <span class="muted">({rating.count})</span>
+        </p>
+      )
+    }
+    <div class="grid grid--3">
+      {
+        reviews.map((r) => (
+          <figure class="card">
+            <blockquote>“{r.quote}”</blockquote>
+            <figcaption class="muted">
+              <strong>{r.author}</strong>
+              {r.role && <span> — {r.role}</span>}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+
+  <style>
+    .proof__rating {
+      font-size: 1.1rem;
+    }
+    .proof figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .proof blockquote {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+  </style>
+</section>

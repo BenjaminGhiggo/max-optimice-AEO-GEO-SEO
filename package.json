@@ -1,0 +1,23 @@
+{
+  "name": "max-optimice-aeo-geo-seo",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Plantilla de landing de marketing en Astro optimizada al máximo para SEO, AEO y GEO (2025-2026).",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.6.1",
+    "@astrojs/sitemap": "^3.3.0",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/mdx": "^4.2.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.8.3"
+  }
+}

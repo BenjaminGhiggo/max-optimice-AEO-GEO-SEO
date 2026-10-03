@@ -1,0 +1,22 @@
+---
+// Página 404 (en el idioma por defecto). Marcada noindex.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations, localizedPath } from '../i18n/ui';
+const locale = 'es';
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  title={t('404.title')}
+  description={t('404.text')}
+  path="/404"
+  locale={locale}
+  noindex={true}
+>
+  <section class="container center">
+    <h1>404</h1>
+    <h2>{t('404.title')}</h2>
+    <p class="muted">{t('404.text')}</p>
+    <a class="btn btn--primary" href={localizedPath('/', locale)}>{t('404.back')}</a>
+  </section>
+</BaseLayout>

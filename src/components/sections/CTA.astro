@@ -1,0 +1,30 @@
+---
+/**
+ * Llamada a la acción final. Una sola acción clara (regla de conversión).
+ */
+interface Props {
+  heading: string;
+  text: string;
+  cta: { label: string; href: string };
+}
+const { heading, text, cta } = Astro.props;
+---
+
+<section class="cta-band" aria-labelledby="cta-title">
+  <div class="container center">
+    <h2 id="cta-title">{heading}</h2>
+    <p class="muted">{text}</p>
+    <a class="btn btn--primary" href={cta.href}>{cta.label}</a>
+  </div>
+
+  <style>
+    .cta-band {
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+    }
+    .cta-band p {
+      margin-inline: auto;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</section>

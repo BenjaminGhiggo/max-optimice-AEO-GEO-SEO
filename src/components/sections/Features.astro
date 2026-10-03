@@ -1,0 +1,54 @@
+---
+/**
+ * Beneficios CUANTIFICADOS. La investigación GEO (Princeton) mostró que añadir
+ * estadísticas duras sube la visibilidad en IAs +30-41%. Cada tarjeta lleva
+ * una cifra concreta, no adjetivos vagos.
+ */
+interface Feature {
+  stat: string; // p. ej. "+40%", "≤2.5s", "0 KB JS"
+  title: string;
+  text: string;
+}
+interface Props {
+  heading: string;
+  intro?: string;
+  items: Feature[];
+}
+const { heading, intro, items } = Astro.props;
+---
+
+<section class="features" aria-labelledby="features-title">
+  <div class="container">
+    <h2 id="features-title">{heading}</h2>
+    {intro && <p class="muted">{intro}</p>}
+    <div class="grid grid--3">
+      {
+        items.map((f) => (
+          <article class="card feature">
+            <p class="feature__stat">{f.stat}</p>
+            <h3>{f.title}</h3>
+            <p class="muted">{f.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <style>
+    .features {
+      background: var(--color-surface);
+    }
+    .feature__stat {
+      font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.25rem);
+      font-weight: 800;
+      color: var(--color-accent);
+      margin: 0 0 0.25rem;
+    }
+    .feature h3 {
+      margin-bottom: 0.35rem;
+    }
+    .feature p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</section>

@@ -1,0 +1,54 @@
+---
+/**
+ * Hero con patrón "respuesta primero" (inverted pyramid).
+ * El H1 + el primer párrafo dicen QUÉ es y el valor principal en lenguaje
+ * claro y citable: así las IAs extraen la definición y los buscadores el snippet.
+ * LCP = texto (no imagen pesada) => pinta casi instantáneo.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Respuesta directa de 1-3 frases. Debe sostenerse fuera de contexto. */
+  lead: string;
+  ctaPrimary: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string };
+}
+const { eyebrow, title, lead, ctaPrimary, ctaSecondary } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    {eyebrow && <p class="hero__eyebrow">{eyebrow}</p>}
+    <h1 id="hero-title">{title}</h1>
+    <p class="hero__lead">{lead}</p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href={ctaPrimary.href}>{ctaPrimary.label}</a>
+      {ctaSecondary && <a class="btn btn--secondary" href={ctaSecondary.href}>{ctaSecondary.label}</a>}
+    </div>
+  </div>
+
+  <style>
+    .hero {
+      padding-block: clamp(3rem, 2rem + 6vw, 7rem);
+    }
+    .hero__eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+    }
+    .hero__lead {
+      font-size: clamp(1.1rem, 1rem + 0.6vw, 1.4rem);
+      color: var(--color-muted);
+      max-width: 48ch;
+    }
+    .hero__cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+  </style>
+</section>

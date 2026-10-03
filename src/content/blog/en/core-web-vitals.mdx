@@ -1,0 +1,37 @@
+---
+title: 'Core Web Vitals in 2026: thresholds and how to pass them'
+description: 'A guide to the current Core Web Vitals thresholds (LCP, INP, CLS) and the concrete techniques to reach the "Good" rating.'
+lang: 'en'
+slug: 'core-web-vitals'
+pubDate: 2026-08-20
+updatedDate: 2026-09-28
+author: 'Max Optimice Team'
+---
+
+**Core Web Vitals are three user-experience metrics Google uses as a ranking factor: LCP (≤2.5 s), INP (≤200 ms) and CLS (≤0.1).** A page passes only when 75% of real-user visits reach "Good" on all three.
+
+## What are the current thresholds?
+
+| Metric | Good | Needs improvement | Poor |
+|---|---|---|---|
+| LCP (loading) | ≤ 2.5 s | 2.5–4.0 s | > 4.0 s |
+| INP (interactivity) | ≤ 200 ms | 200–500 ms | > 500 ms |
+| CLS (stability) | ≤ 0.1 | 0.1–0.25 | > 0.25 |
+
+**INP replaced FID in March 2024** as the official interactivity metric.
+
+## How do you improve LCP?
+
+The LCP element is usually the hero image or headline. To lower it:
+
+1. Make the LCP element present in the initial HTML.
+2. Use `fetchpriority="high"` and `loading="eager"` on the main image (never `lazy`).
+3. Serve modern formats (WebP/AVIF) with a responsive `srcset`.
+
+## How do you avoid layout shifts (CLS)?
+
+Always reserve space: set `width` and `height` (or `aspect-ratio`) on images, iframes and ads, and preload fonts with `font-display: optional` or `swap` to avoid text reflow.
+
+> A text-based hero, sized images and inlined CSS keep Core Web Vitals green from the first build —exactly what this template does.
+
+_Sources: Google Search Central; web.dev, Core Web Vitals (2026)._

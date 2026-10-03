@@ -1,0 +1,23 @@
+---
+/**
+ * Inyector genérico de JSON-LD.
+ * Acepta uno o varios nodos schema.org y los emite en un solo bloque @graph
+ * (práctica recomendada para relacionar entidades: Organization, WebSite, etc.).
+ */
+interface Props {
+  schema: Record<string, unknown> | Record<string, unknown>[];
+}
+const { schema } = Astro.props;
+
+const nodes = Array.isArray(schema) ? schema : [schema];
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': nodes,
+};
+---
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(graph)}
+/>

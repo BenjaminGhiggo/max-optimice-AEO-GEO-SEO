@@ -1,0 +1,74 @@
+---
+/**
+ * FAQ: el formato más extraíble para AEO/GEO.
+ * - Encabezado en forma de pregunta (H3) => mapea a "People Also Ask" y voz.
+ * - Respuesta directa de 40-60 palabras que se sostiene sola.
+ * Usa <details>/<summary> para accesibilidad nativa SIN JavaScript.
+ * El schema FAQPage se añade aparte desde la página (lo parsean las IAs).
+ */
+import type { QA } from '../../lib/schema';
+
+interface Props {
+  heading: string;
+  items: QA[];
+}
+const { heading, items } = Astro.props;
+---
+
+<section id="faq" class="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <h2 id="faq-title">{heading}</h2>
+    <div class="faq__list">
+      {
+        items.map((qa) => (
+          <details class="faq__item">
+            <summary>
+              {/* H3 dentro del summary: jerarquía para crawlers + control visual */}
+              <h3>{qa.question}</h3>
+            </summary>
+            <p>{qa.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+
+  <style>
+    .faq__list {
+      max-width: 48rem;
+      margin-top: 1.5rem;
+    }
+    .faq__item {
+      border-bottom: 1px solid var(--color-border);
+      padding: 0.5rem 0;
+    }
+    .faq__item summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .faq__item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq__item summary h3 {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+    }
+    .faq__item summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--color-accent);
+      line-height: 1;
+    }
+    .faq__item[open] summary::after {
+      content: '–';
+    }
+    .faq__item p {
+      color: var(--color-muted);
+      margin: 0 0 0.75rem;
+    }
+  </style>
+</section>

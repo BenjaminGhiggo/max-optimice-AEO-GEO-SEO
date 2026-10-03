@@ -1,0 +1,64 @@
+---
+/**
+ * Página de landing reutilizable para ambos idiomas.
+ * Las rutas /index.astro (es) y /en/index.astro solo pasan el locale.
+ * Aquí se compone el contenido + los schemas específicos de la home.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from './sections/Hero.astro';
+import Features from './sections/Features.astro';
+import SocialProof from './sections/SocialProof.astro';
+import FAQ from './sections/FAQ.astro';
+import CTA from './sections/CTA.astro';
+import type { Locale } from '../consts';
+import { useTranslations, localizedPath } from '../i18n/ui';
+import { getLanding } from '../data/landing';
+import { breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const t = useTranslations(locale);
+const c = getLanding(locale);
+
+// Schemas de la home: migas, FAQ (para IAs) y producto con valoración (rich result).
+const pageSchema = [
+  breadcrumbSchema([{ name: t('nav.home'), path: localizedPath('/', locale) }]),
+  faqSchema(c.faq.items),
+  productSchema({
+    name: c.meta.title,
+    description: c.meta.description,
+    price: '0',
+    priceCurrency: 'USD',
+    ratingValue: c.proof.rating.value,
+    reviewCount: c.proof.rating.count.replace(/\D/g, ''),
+  }),
+];
+---
+
+<BaseLayout
+  title={c.meta.title}
+  description={c.meta.description}
+  path="/"
+  locale={locale}
+  type="website"
+  schema={pageSchema}
+>
+  <Hero
+    eyebrow={c.hero.eyebrow}
+    title={c.hero.title}
+    lead={c.hero.lead}
+    ctaPrimary={{ label: t('cta.primary'), href: localizedPath('/blog', locale) }}
+    ctaSecondary={{ label: t('cta.secondary'), href: '#faq' }}
+  />
+  <Features heading={c.features.heading} intro={c.features.intro} items={c.features.items} />
+  <SocialProof heading={c.proof.heading} rating={c.proof.rating} reviews={c.proof.reviews} />
+  <FAQ heading={c.faq.heading} items={c.faq.items} />
+  <CTA
+    heading={c.cta.heading}
+    text={c.cta.text}
+    cta={{ label: t('cta.primary'), href: localizedPath('/blog', locale) }}
+  />
+</BaseLayout>
