@@ -8,11 +8,11 @@ export const SITE = {
   // ⚠️ ORIGEN del sitio (protocolo + host), SIN subruta ni barra final.
   //   - Dominio propio:        'https://www.tudominio.com'
   //   - GitHub Pages proyecto: 'https://TU_USUARIO.github.io'
-  url: 'https://www.example.com',
+  url: 'https://benjaminghiggo.github.io',
   // ⚠️ Subruta de despliegue (debe coincidir con `base` en astro.config.mjs).
   //   - Dominio propio, Vercel/Netlify/Cloudflare, o usuario.github.io: '/'
   //   - GitHub Pages de proyecto:                                       '/nombre-del-repo'
-  base: '/',
+  base: '/max-optimice-AEO-GEO-SEO',
   // Nombre de marca / organización.
   name: 'Max Optimice',
   // Eslogan corto (se usa como fallback de descripción).

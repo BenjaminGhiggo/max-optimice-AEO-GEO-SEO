@@ -108,22 +108,27 @@ Valida siempre con el [Rich Results Test](https://search.google.com/test/rich-re
 
 ---
 
-## 🚀 Despliegue
+## 🚀 Despliegue en GitHub Pages (esta rama)
 
-El sitio es **estático** (`npm run build` → carpeta `dist/`), así que se publica en cualquier hosting estático. Antes de desplegar, ajusta `src/consts.ts`:
+> Esta es la rama **`deploy/github-pages`**: `main` + la configuración específica de GitHub Pages de proyecto (subruta `/max-optimice-AEO-GEO-SEO` + workflow de Actions). El template genérico y reutilizable vive en `main` con `base: '/'`.
 
-| Destino | `SITE.url` | `SITE.base` |
-|---|---|---|
-| **Vercel / Netlify / Cloudflare Pages** | `https://www.tudominio.com` | `/` |
-| Dominio propio (cualquier host) | `https://www.tudominio.com` | `/` |
-| `TU_USUARIO.github.io` (sitio de usuario) | `https://TU_USUARIO.github.io` | `/` |
-| **GitHub Pages de proyecto** (subruta) | `https://TU_USUARIO.github.io` | `/nombre-del-repo` |
+Incluye el workflow `.github/workflows/deploy.yml` (acción oficial `withastro/action`), que compila y publica en cada push a esta rama.
 
-Comando de build: `npm run build` · Directorio de salida: `dist` · Node 18.17+.
+### Pasos
 
-> **Recomendado:** un hosting estático en la **raíz del dominio** (`SITE.base = '/'`) para que `robots.txt`, `llms.txt` y las URLs queden en la raíz, que es donde los buscadores y crawlers de IA los leen. Cloudflare Pages, Vercel y Netlify cumplen esto de serie.
->
-> La configuración específica para **GitHub Pages** (subruta + workflow de Actions) vive en la rama `deploy/github-pages`, no en `main`, para mantener este template limpio y reutilizable.
+1. En GitHub: **Settings → Pages → Build and deployment → Source: _GitHub Actions_**.
+2. Haz push a la rama `deploy/github-pages` (o lánzalo a mano en **Actions → Deploy to GitHub Pages → Run workflow**).
+3. El sitio queda en `https://benjaminghiggo.github.io/max-optimice-AEO-GEO-SEO/`.
+
+Si cambias de usuario/repo, actualiza `SITE.url` y `SITE.base` en `src/consts.ts`.
+
+### ⚠️ Limitación de GitHub Pages de **proyecto** (subruta)
+
+Los crawlers solo leen `robots.txt` y `llms.txt` en la **raíz del dominio** (`https://TU_USUARIO.github.io/robots.txt`), que en un repo de proyecto **no controlas**. Bajo subruta esta plantilla los sirve en `…/nombre-del-repo/robots.txt`, que los buscadores ignoran.
+
+Todo lo demás (HTML, canonical, hreflang, JSON-LD, OG, sitemap) funciona perfecto en subruta. El sitemap puedes enviarlo por su URL completa en Search Console.
+
+**Para control total de SEO:** usa un **dominio propio** o un hosting en la raíz (Cloudflare Pages / Vercel / Netlify). Cambia a `SITE.base = '/'` (como en `main`) y `robots.txt`/`llms.txt` quedarán en la raíz real.
 
 ---
 
