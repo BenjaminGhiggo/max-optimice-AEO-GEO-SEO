@@ -39,3 +39,8 @@ jobs:
           # --branch=main => despliegue de PRODUCCIÓN (la production branch del proyecto es "main"),
           # por eso sirve en max.benjacode.com aunque el workflow corra en deploy/cloudflare.
           command: pages deploy dist --project-name=max-optimice --branch=main
+
+      - name: Notificar a IndexNow (Bing/Yandex)
+        run: npm run indexnow
+        env:
+          INDEXNOW_HOST: max.benjacode.com

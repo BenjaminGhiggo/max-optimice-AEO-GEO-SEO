@@ -1,0 +1,11 @@
+# Redirecciones de Cloudflare Pages.
+#
+# NOTA sobre *.pages.dev: Cloudflare SIEMPRE sirve el subdominio gratuito
+# (max-optimice.pages.dev) y un redirect por hostname aquí NO lo afecta (ese
+# dominio no está en una zona que controles). La deduplicación correcta ya está
+# resuelta por el <link rel="canonical"> de cada página, que apunta al apex
+# max.benjacode.com — es el mecanismo que Google recomienda para esto.
+#
+# Ejemplo para cuando AÑADAS un dominio propio con www (sí funciona, porque www
+# estaría en tu zona). Descomenta y ajusta:
+# https://www.max.benjacode.com/* https://max.benjacode.com/:splat 301!

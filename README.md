@@ -141,6 +141,13 @@ npx wrangler pages deploy dist --project-name=max-optimice --branch=main
 
 > Para otros hosts (Vercel/Netlify/dominio propio): el sitio es estático (`dist/`), `base: '/'`. Build `npm run build`, salida `dist`, Node 18.17+.
 
+### Extras de esta rama (producción)
+
+- **IndexNow**: tras cada deploy, el workflow ejecuta `npm run indexnow`, que envía las URLs del sitemap a Bing/Yandex (descubrimiento rápido; Bing alimenta ChatGPT Search). La clave pública vive en `public/<clave>.txt`.
+- **`public/_headers`**: HSTS + cabeceras de seguridad + caché inmutable de `/_astro/*`.
+- **Deduplicación de `*.pages.dev`**: Cloudflare siempre sirve el subdominio gratuito y un redirect por hostname no lo afecta. La protección real es el `<link rel="canonical">` (ya apunta al apex), que es el mecanismo que Google recomienda. Ver `public/_redirects` (incluye ejemplo www→apex para dominio propio).
+- **Verificado en producción**: crawlers de IA (GPTBot/ClaudeBot/PerplexityBot/OAI-SearchBot) acceden con 200 — Cloudflare NO los bloquea en esta zona.
+
 ---
 
 ## 📌 Antes de publicar
