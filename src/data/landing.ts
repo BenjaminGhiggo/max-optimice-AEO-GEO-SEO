@@ -35,14 +35,14 @@ export interface LandingContent {
 const content: Record<Locale, LandingContent> = {
   es: {
     meta: {
-      title: 'Plantilla optimizada para SEO, AEO y GEO',
+      title: 'Plantilla SEvO: SEO, AEO y GEO en uno',
       description:
-        'Plantilla de landing en Astro optimizada para buscadores (SEO), motores de respuesta (AEO) y motores generativos de IA (GEO): HTML estático, datos estructurados y Core Web Vitals.',
+        'Plantilla de landing en Astro para Search Everywhere Optimization (SEvO): une SEO, AEO y GEO para posicionar en buscadores y ser citado por ChatGPT, Claude y Perplexity. HTML estático y datos estructurados.',
     },
     hero: {
       eyebrow: 'SEO · AEO · GEO',
       title: 'La landing que buscadores y IAs leen, entienden y citan',
-      lead: 'Max Optimice es una plantilla de página de aterrizaje construida en Astro que sirve HTML estático con datos estructurados, pensada para posicionar en Google y para ser citada por ChatGPT, Claude y Perplexity. Lista en minutos, sin JavaScript de más.',
+      lead: 'Max Optimice es una plantilla de landing construida en Astro para Search Everywhere Optimization (SEvO): une SEO, AEO y GEO en un solo sitio. Sirve HTML estático con datos estructurados para posicionar en Google y para ser citada por ChatGPT, Claude y Perplexity. Lista en minutos, sin JavaScript de más.',
     },
     features: {
       heading: '¿Por qué esta plantilla rinde en los tres frentes?',
@@ -106,6 +106,11 @@ const content: Record<Locale, LandingContent> = {
       heading: 'Preguntas frecuentes',
       items: [
         {
+          question: '¿Qué es SEvO (Search Everywhere Optimization)?',
+          answer:
+            'SEvO es la estrategia paraguas que une SEO, AEO y GEO en un solo modelo: optimizar para ser encontrado y citado en buscadores, motores de respuesta y motores de IA generativa. No reemplaza al SEO; lo integra junto al AEO y al GEO para tener visibilidad en todo el ecosistema de búsqueda.',
+        },
+        {
           question: '¿Qué diferencia hay entre SEO, AEO y GEO?',
           answer:
             'El SEO posiciona tu página en los resultados clásicos de buscadores. El AEO optimiza para ser la respuesta directa en featured snippets y asistentes de voz. El GEO busca que los motores de IA generativa, como ChatGPT o Perplexity, citen tu contenido en sus respuestas.',
@@ -139,14 +144,14 @@ const content: Record<Locale, LandingContent> = {
   },
   en: {
     meta: {
-      title: 'Template optimized for SEO, AEO and GEO',
+      title: 'SEvO Template: SEO, AEO and GEO in one',
       description:
-        'Astro landing page template optimized for search engines (SEO), answer engines (AEO) and generative AI engines (GEO): static HTML, structured data and strong Core Web Vitals.',
+        'Astro landing page template for Search Everywhere Optimization (SEvO): unites SEO, AEO and GEO to rank in search engines and get cited by ChatGPT, Claude and Perplexity. Static HTML and structured data.',
     },
     hero: {
       eyebrow: 'SEO · AEO · GEO',
       title: 'The landing page search engines and AIs read, understand and cite',
-      lead: 'Max Optimice is an Astro-built landing page template that ships static HTML with structured data, designed to rank on Google and to be cited by ChatGPT, Claude and Perplexity. Ready in minutes, with no excess JavaScript.',
+      lead: 'Max Optimice is an Astro-built landing page template for Search Everywhere Optimization (SEvO): it unites SEO, AEO and GEO in one site. It ships static HTML with structured data to rank on Google and get cited by ChatGPT, Claude and Perplexity. Ready in minutes, with no excess JavaScript.',
     },
     features: {
       heading: 'Why this template performs on all three fronts',
@@ -209,6 +214,11 @@ const content: Record<Locale, LandingContent> = {
     faq: {
       heading: 'Frequently asked questions',
       items: [
+        {
+          question: 'What is SEvO (Search Everywhere Optimization)?',
+          answer:
+            'SEvO is the umbrella strategy that unites SEO, AEO and GEO into one model: optimizing to be found and cited across search engines, answer engines and generative AI engines. It does not replace SEO; it integrates it with AEO and GEO for visibility across the whole search ecosystem.',
+        },
         {
           question: 'What is the difference between SEO, AEO and GEO?',
           answer:
