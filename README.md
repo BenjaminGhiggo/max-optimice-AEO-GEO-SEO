@@ -74,9 +74,10 @@ Cada decisión está respaldada por investigación reciente (2025–2026). **Lo 
 - [x] `<title>` único (50–60 car.) y meta description (140–160 car.) por página.
 - [x] Canonical **absoluto** autorreferenciado en cada página.
 - [x] `robots` con `max-snippet:-1, max-image-preview:large` (no limita lo que las IAs pueden citar).
-- [x] Open Graph (1200×630) + Twitter Card `summary_large_image`.
+- [x] Open Graph (1200×630) + Twitter Card `summary_large_image`, con **imagen OG única por página generada en build** (`astro-og-canvas`).
 - [x] **Core Web Vitals**: LCP ≤2,5 s · INP ≤200 ms · CLS ≤0,1. Hero textual, CSS en línea, cero JS.
 - [x] `sitemap-index.xml`, `robots.txt` y `rss.xml` automáticos.
+- [x] **Lighthouse CI** en GitHub Actions: audita Core Web Vitals, SEO y accesibilidad en cada push/PR y falla si SEO o a11y bajan de 0.95 (`lighthouserc.json`).
 - [x] Accesibilidad: foco visible, enlace "saltar al contenido", contraste AA, `prefers-reduced-motion`.
 - ⚠️ **No** incluimos `SearchAction`/sitelinks searchbox: Google lo **deprecó en 2024**.
 
