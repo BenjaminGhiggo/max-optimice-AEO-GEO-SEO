@@ -19,6 +19,9 @@ pnpm-debug.log*
 .env.production
 .env.local
 
+# secretos locales (credenciales de despliegue) — NUNCA se suben
+.secrets/
+
 # os / editor
 .DS_Store
 Thumbs.db

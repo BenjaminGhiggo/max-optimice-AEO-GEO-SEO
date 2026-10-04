@@ -45,6 +45,7 @@ const pageSchema = [
   path={`/blog/${post.data.slug}`}
   locale={locale}
   type="article"
+  image={`/og/${locale}/blog/${post.data.slug}.png`}
   publishedTime={post.data.pubDate.toISOString()}
   modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
   schema={pageSchema}
