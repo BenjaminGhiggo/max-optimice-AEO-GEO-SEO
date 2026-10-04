@@ -1,12 +1,26 @@
-# Max Optimice — Plantilla de landing SEO · AEO · GEO
+# Max Optimice — Plantilla Astro para SEO, AEO y GEO (Search Everywhere Optimization)
 
-Plantilla de **página de aterrizaje de marketing** construida en [Astro](https://astro.build), optimizada al máximo para los tres frentes de la búsqueda moderna:
+> Plantilla de landing de marketing **open source** en [Astro](https://astro.build), optimizada al máximo para **SEO + AEO + GEO** (Search Everywhere Optimization, SEvO): posiciona en Google/Bing y es citada por ChatGPT, Claude, Perplexity y Google AI Overviews.
+
+**🔗 Demo en vivo:** https://max.benjacode.com · **Licencia:** MIT · **Stack:** Astro 5 · TypeScript · cero JS
+
+Optimizada al máximo para los tres frentes de la búsqueda moderna:
 
 - **SEO** — buscadores clásicos (Google, Bing).
 - **AEO** — _Answer Engine Optimization_: featured snippets, "People Also Ask", asistentes de voz.
 - **GEO** — _Generative Engine Optimization_: ser citado por ChatGPT, Claude, Perplexity y Google AI Overviews.
 
-Bilingüe (**español + inglés**) con `hreflang`, HTML estático con **cero JavaScript por defecto**, datos estructurados y Core Web Vitals en verde desde el primer build.
+### ✨ Características
+
+- ⚡ **HTML estático, cero JavaScript** por defecto → visible para los crawlers de IA que no ejecutan JS (~69%)
+- 🌍 **Bilingüe (ES + EN)** con `hreflang` bidireccional y `x-default`
+- 🧩 **JSON-LD** (Organization, WebSite, Breadcrumb, FAQPage, Article, Product/Offer + AggregateRating)
+- 🖼️ **Imágenes Open Graph únicas por página** generadas en build
+- 🤖 `robots.txt` con matriz de crawlers de IA · `llms.txt` · `sitemap.xml` · RSS
+- 📈 **Lighthouse CI** (Core Web Vitals, SEO, a11y) + **IndexNow** (Bing/Yandex) en el deploy
+- ♿ Accesible (WCAG AA), modo claro/oscuro, despliegue en Cloudflare Pages / Vercel / Netlify / GitHub Pages
+
+> Basada en evidencia (estudio GEO de Princeton, Semrush, Google Search Central). Palabras clave: `astro` `seo` `aeo` `geo` `generative-engine-optimization` `answer-engine-optimization` `llms-txt` `structured-data` `schema-org` `core-web-vitals` `i18n` `landing-page` `sevo`.
 
 ---
 
